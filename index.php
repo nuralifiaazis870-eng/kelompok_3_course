@@ -14,6 +14,18 @@ function response($status, $data) {
 
     http_response_code($status);
 
+    // Membuat atau menggunakan Request ID
+
+    $requestId = $_SERVER["HTTP_X_REQUEST_ID"] ?? bin2hex(random_bytes(8));
+
+    // Menambahkan metadata ke setiap respons
+
+    $data["meta"] = [
+
+        "request_id" => $requestId
+
+    ];
+
     echo json_encode($data, JSON_PRETTY_PRINT);
 
     exit;
